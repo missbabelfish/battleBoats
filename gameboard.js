@@ -12,37 +12,42 @@ class Gameboard {
             }))
         );
 
-        this.ships = {
-            /*
-            shipId : {
-                coords: [
-                    [0,0],
-                    [0,1]
-                ],
-                length: 2,
-                hits: 0,
-                sunk: false ???
-            }
-            
-            */
-        };
+        this.ships = new Array(5).fill(null)
 
     }
     
-    placeShip(shipId, startRow, startCol, length, orient) {
-        // generate ID based on which ships have been placed (1-5?)
-        // loop through [r...r+length] or [c...c+length], mark each cell's hasShip and set shipId. Store coords in this.ships.
-
+    placeShip(id, startRow, startCol, length, orient) {
+        let ship = new Ship(length)
+        const coords = [];
+        for (let i = 0; i < length; i++) {
+            const r = orient === 'vert' ? startRow + i : startRow;
+            const c = orient === 'horiz' ? startCol + i : startCol;
+            this.board[r][c].hasShip = true;
+            this.board[r][c].shipId = id;
+            coords.push([r, c])
+        }
+        this.ships[id] = { coords, ship }
     }
     
     receiveAttack(row, col) {
-        // flip this.board[row][col].isHit = true
-        // check if hasShip -> ship.hit() -> 
-        // if isHit but !hasShip, mark/display missed
+        let square = this.board[row][col];
+        square.isHit = true;
+        let id = square.shipId !== null ? square.shipId : null
+        let ship = id !== null ? this.ships[id].ship : null
+        if (square.hasShip) {
+            ship.hit()
+            console.log(this.ships[id].ship.hits)
+            ship.isSunk()
+        }
     }
 
     allSunk() {
-        // check to see if all 5 ships are sunk - where tracking sunk boolean?
+        // check to see if all 5 ships are sunk
+        console.log(this.ships[0].ship.sunk)
+        return this.ships.every(
+            // refactor when there will be no null ships
+			ship => ship === null || ship.ship.sunk === true
+		);
     }
 
 }

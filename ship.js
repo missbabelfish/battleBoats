@@ -5,13 +5,16 @@ class Ship {
         this.sunk = sunk
     }
 
-    hit () {
+    hit() {
         this.hits++
         return this.hits
     }
 
-    isSunk () {
-        return this.length <= this.hits
+    isSunk() {
+        if (this.length <= this.hits) {
+            this.sunk = true
+        }
+        return this.sunk
     }
 }
 
