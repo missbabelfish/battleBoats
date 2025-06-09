@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background-color: blue;
+    display: flex;
+
+}
+
+.boards-container {
+    display: flex;
+    height: 30rem;
+    width: 90%;
+    border: 2px solid red;
+    color: navy;
+    margin: auto;
+}
+
+.board {
+    display: grid;
+    grid-template-rows: repeat(10, 40px);
+    grid-template-columns: repeat(10, 40px);
+    gap: 4px;
+}
+
+.square {
+    width: 40px;
+    height: 40px;
+    background-color: lightblue;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.square.hit {
+    background: gray;
+}
+
+.square.ship-hit {
+    background: red;
+}

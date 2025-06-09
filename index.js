@@ -1,10 +1,25 @@
-import Ship from "./ship";
-import Gameboard from "./gameboard";
-import Player from "./player";
+import Ship from "./ship.js";
+import Gameboard from "./gameboard.js";
+import Player from "./player.js";
 
-const board = new Gameboard(10);
+const player1 = new Player('human');
+const player1Board = player1.board
+const player2 = new Player()
+const player2Board = player2.board
+console.log({player2Board})
 
-// need to rewrite this with Player as entry point
+player1Board.placeShip(0, 0, 0, 5, 'horiz');
+player1Board.placeShip(1, 0, 5, 4, 'vert');
+player1Board.placeShip(2, 0, 9, 3, 'vert');
+player1Board.placeShip(3, 5, 9, 3, 'vert');
+player1Board.placeShip(4, 9, 5, 2, 'horiz');
+
+player2Board.placeShip(0, 0, 9, 5, 'vert');
+player2Board.placeShip(1, 2, 1, 4, 'vert');
+player2Board.placeShip(2, 6, 2, 3, 'horiz');
+player2Board.placeShip(3, 9, 0, 3, 'horiz');
+player2Board.placeShip(4, 3, 8, 2, 'horiz');
+
 function renderBoard(gameBoard, containerId) {
     const boardContainer = document.getElementById(containerId)
     boardContainer.innerHTML = ''
@@ -32,3 +47,9 @@ function renderBoard(gameBoard, containerId) {
     }
 }
 
+
+
+renderBoard(player1Board, 'player1-board');
+renderBoard(player2Board, 'player2-board');
+
+console.log(player1Board)
