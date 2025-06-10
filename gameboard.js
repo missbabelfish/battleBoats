@@ -36,7 +36,9 @@ class Gameboard {
         let ship = id !== null ? this.ships[id].ship : null
         if (square.hasShip) {
             ship.hit()
-            ship.isSunk()
+            if (ship.isSunk()) {
+                this.allSunk()
+            }
         }
     }
 
