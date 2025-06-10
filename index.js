@@ -5,6 +5,7 @@ import Player from "./player.js";
 const player1 = new Player('human');
 const player1Board = player1.board
 const player2 = new Player()
+console.log(player2)
 const player2Board = player2.board
 console.log({player2Board})
 
@@ -18,10 +19,12 @@ player2Board.placeShip(0, 0, 9, 5, 'vert');
 player2Board.placeShip(1, 2, 1, 4, 'vert');
 player2Board.placeShip(2, 6, 2, 3, 'horiz');
 player2Board.placeShip(3, 9, 0, 3, 'horiz');
-player2Board.placeShip(4, 3, 8, 2, 'horiz');
+player2Board.placeShip(4, 3, 7, 2, 'horiz');
 
 function renderBoard(gameBoard, containerId) {
+    console.log({gameBoard, containerId})
     const boardContainer = document.getElementById(containerId)
+    console.log({boardContainer})
     boardContainer.innerHTML = ''
 
     for (let r = 0; r < gameBoard.size; r++) {
@@ -51,5 +54,3 @@ function renderBoard(gameBoard, containerId) {
 
 renderBoard(player1Board, 'player1-board');
 renderBoard(player2Board, 'player2-board');
-
-console.log(player1Board)
