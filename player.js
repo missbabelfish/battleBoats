@@ -1,8 +1,8 @@
-import Ship from "./ship.js";
 import Gameboard from "./gameboard.js";
 
 class Player {
-    constructor(type = 'computer') {
+    constructor(name, type = 'computer') {
+        this.name = name;
         // real or computer
         this.type = type; 
 

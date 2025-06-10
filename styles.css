@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    text-align: center;
+    margin: 0;
 }
 
 body {
@@ -15,10 +17,11 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 30rem;
+    height: 34rem;
     width: 90%;
     border: 2px solid red;
-    color: navy;
+    background: navy;
+    color: white;
     margin: auto;
 }
 
@@ -27,6 +30,7 @@ body {
     grid-template-rows: repeat(10, 40px);
     grid-template-columns: repeat(10, 40px);
     gap: 4px;
+    margin-top: 1rem;
 }
 
 .square {

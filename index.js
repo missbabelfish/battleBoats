@@ -1,11 +1,10 @@
-import Ship from "./ship.js";
-import Gameboard from "./gameboard.js";
 import Player from "./player.js";
 import renderBoard from "./renderBoard.js";
+import computerPlay from "./computerPlay.js";
 
-const player1 = new Player('human');
+const player1 = new Player('player1', 'human');
 const player1Board = player1.board
-const player2 = new Player()
+const player2 = new Player('player2')
 const player2Board = player2.board
 
 player1Board.placeShip(0, 0, 0, 5, 'horiz');
@@ -20,5 +19,19 @@ player2Board.placeShip(2, 6, 2, 3, 'horiz');
 player2Board.placeShip(3, 9, 0, 3, 'horiz');
 player2Board.placeShip(4, 3, 7, 2, 'horiz');
 
-renderBoard(player1Board, 'player1-board');
-renderBoard(player2Board, 'player2-board');
+renderBoard(player1, player1Board, player2Board, 'player1-board');
+renderBoard(player2, player2Board, player1Board, 'player2-board');
+
+const player2Container = document.getElementById('player2-board');
+
+player2Container.addEventListener('click', () => {
+	let row, col;
+	[row, col] = computerPlay();
+	while (player1Board.board[row][col].isHit) {
+		([row, col] = computerPlay());
+	}
+	setTimeout(() => {
+		player1Board.receiveAttack(row, col);
+		renderBoard(player1, player1Board, player2Board, 'player1-board');
+	}, 1000);
+});

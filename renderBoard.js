@@ -1,6 +1,7 @@
 import Player from './player.js';
+import computerPlay from './computerPlay.js';
 
-export default function renderBoard(gameBoard, containerId) {
+export default function renderBoard(player, gameBoard, opponentBoard, containerId) {
 	const boardContainer = document.getElementById(containerId);
 	boardContainer.innerHTML = '';
 
@@ -19,10 +20,22 @@ export default function renderBoard(gameBoard, containerId) {
 
 			div.addEventListener('click', () => {
 				gameBoard.receiveAttack(r, c);
-				renderBoard(gameBoard, containerId);
+				renderBoard(player, gameBoard, opponentBoard, containerId);
 			});
 
 			boardContainer.appendChild(div);
 		}
 	}
+
+    // if (player.name === 'player2' && player.type === 'computer') {
+    //     console.log('is computer')
+    //     boardContainer.addEventListener('click', () => {
+    //         const [row, col] = computerPlay()
+    //         console.log({row, col})
+    //         setTimeout(() => {
+    //             opponentBoard.receiveAttack(row, col)
+    //             renderBoard(player, gameBoard, opponentBoard, containerId)
+    //         }, 1500);
+    //     })
+    // }
 }
