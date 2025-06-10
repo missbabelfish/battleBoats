@@ -19,23 +19,12 @@ export default function renderBoard(player, gameBoard, opponentBoard, containerI
 			}
 
 			div.addEventListener('click', () => {
-				gameBoard.receiveAttack(r, c);
+				const isOver = gameBoard.receiveAttack(r, c);
+                if (isOver) console.log('game over')
 				renderBoard(player, gameBoard, opponentBoard, containerId);
 			});
 
 			boardContainer.appendChild(div);
 		}
 	}
-
-    // if (player.name === 'player2' && player.type === 'computer') {
-    //     console.log('is computer')
-    //     boardContainer.addEventListener('click', () => {
-    //         const [row, col] = computerPlay()
-    //         console.log({row, col})
-    //         setTimeout(() => {
-    //             opponentBoard.receiveAttack(row, col)
-    //             renderBoard(player, gameBoard, opponentBoard, containerId)
-    //         }, 1500);
-    //     })
-    // }
 }

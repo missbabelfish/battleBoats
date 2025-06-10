@@ -37,7 +37,9 @@ class Gameboard {
         if (square.hasShip) {
             ship.hit()
             if (ship.isSunk()) {
-                this.allSunk()
+                if (this.allSunk()) {
+                    return true;
+                }
             }
         }
     }
