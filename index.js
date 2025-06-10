@@ -31,7 +31,11 @@ player2Container.addEventListener('click', () => {
 		([row, col] = computerPlay());
 	}
 	setTimeout(() => {
-		player1Board.receiveAttack(row, col);
-		renderBoard(player1, player1Board, player2Board, 'player1-board');
+        const isOver = player1Board.receiveAttack(row, col);
+		if (isOver) {
+            alert('Player 2 wins!!');
+        } else {
+            renderBoard(player1, player1Board, player2Board, 'player1-board');
+        }
 	}, 1000);
 });
