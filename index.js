@@ -19,23 +19,24 @@ player2Board.placeShip(2, 6, 2, 3, 'horiz');
 player2Board.placeShip(3, 9, 0, 3, 'horiz');
 player2Board.placeShip(4, 3, 7, 2, 'horiz');
 
-renderBoard(player1, player1Board, player2Board, 'player1-board');
-renderBoard(player2, player2Board, player1Board, 'player2-board');
+renderBoard(player1Board, player2Board, 'player1-board');
+renderBoard(player2Board, player1Board, 'player2-board');
 
 const player2Container = document.getElementById('player2-board');
 
-player2Container.addEventListener('click', () => {
-	let row, col;
-	[row, col] = computerPlay();
-	while (player1Board.board[row][col].isHit) {
-		([row, col] = computerPlay());
-	}
-	setTimeout(() => {
-        const isOver = player1Board.receiveAttack(row, col);
-		if (isOver) {
-            alert('Player 2 wins!!');
-        } else {
-            renderBoard(player1, player1Board, player2Board, 'player1-board');
-        }
-	}, 1000);
-});
+// player2Container.addEventListener('click', () => {
+// 	console.log({player2Container})
+// 	let row, col;
+// 	[row, col] = computerPlay();
+// 	while (player1Board.board[row][col].isHit) {
+// 		([row, col] = computerPlay());
+// 	}
+// 	setTimeout(() => {
+//         const isOver = player1Board.receiveAttack(row, col);
+// 		if (isOver) {
+//             alert('Player 2 wins!!');
+//         } else {
+//             renderBoard(player1, player1Board, player2Board, 'player1-board');
+//         }
+// 	}, 1000);
+// });

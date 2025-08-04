@@ -47,10 +47,14 @@ class Gameboard {
     allSunk() {
         // check to see if all 5 ships are sunk
         console.log(this.ships[0].ship.sunk)
-        return this.ships.every(
+        const allSunk = this.ships.every(
             // refactor when there will be no null ships
 			ship => ship === null || ship.ship.sunk === true
 		);
+        if (allSunk) {
+            alert('GAME OVER!!!')
+            return true
+        }
     }
 
 }
