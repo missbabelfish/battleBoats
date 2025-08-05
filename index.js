@@ -2,8 +2,14 @@
 import createGame from './createGame.js';
 import renderBoard from './renderBoard.js';
 import computerPlay from './computerPlay.js';
+import Gameboard from './gameboard.js';
+
+const shipButtons = document.querySelector('.ship-buttons')
 
 let player1, player2, board1, board2;
+// set placement mode
+let isPlacingShips = true;
+let shipsToPlace = 5;
 
 function startNewGame() {
 	// clear old state
@@ -17,9 +23,20 @@ function startNewGame() {
 	({ player1, player2, board1, board2 } = createGame());
 	renderBoard(board1, board2, 'player1-board');
 	renderBoard(board2, board1, 'player2-board');
+
+	
 }
 
-// click via delegation
+shipButtons.addEventListener('click', e => {
+	const buttons = [...document.getElementsByClassName('ship-button')];
+	buttons.forEach(button => {
+		button.classList.remove('selected')
+	});
+	let ship = e.target.closest('button')
+	ship.classList.toggle('selected')
+})
+
+// hardcoded to 1-player game
 document.getElementById('player2-board').addEventListener('click', e => {
 	// only act if a .square was clicked
 	const sq = e.target.closest('.square');
@@ -61,6 +78,24 @@ document.getElementById('player2-board').addEventListener('click', e => {
 		}
 	}, 500);
 });
+
+document.getElementById('player1-board').addEventListener('mouseover', e => {
+	if (!isPlacingShips) {
+		return;
+	}
+
+})
+
+document.getElementById('player1-board').addEventListener('click', e => {
+	if (!isPlacingShips) {
+		return;
+	}
+	const sq = e.target.closest('.square');
+	if (!sq) return;
+
+
+
+})
 
 // Start the first game
 startNewGame();

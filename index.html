@@ -7,14 +7,26 @@
     <title>BattleBoats</title>
 </head>
 <body>
-    <div class="boards-container">
-        <div class="board-side">
-            <h2>Player 1</h2>
-            <div class="board" id="player1-board"></div>
+    <div class="container">
+        <div class="place-ships">
+            <h1>Player 1 - Select Boat to Place</h1>
+            <div class="ship-buttons">
+                <button class="ship-button" id="sub">Submarine</button>
+                <button class="ship-button" id="yacht">Yacht</button>
+                <button class="ship-button" id="tug">Tugboat</button>
+                <button class="ship-button" id="barge">Party Barge</button>
+                <button class="ship-button" id="dinghy">Dinghy</button>
+            </div>
         </div>
-        <div class="board-side">
-            <h2>Player 2</h2>
-            <div class="board" id="player2-board"></div>
+        <div class="boards-container">
+            <div class="board-side">
+                <h2>Player 1</h2>
+                <div class="board" id="player1-board"></div>
+            </div>
+            <div class="board-side">
+                <h2>Player 2</h2>
+                <div class="board" id="player2-board"></div>
+            </div>
         </div>
     </div>
 

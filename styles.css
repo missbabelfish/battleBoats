@@ -2,6 +2,7 @@
     box-sizing: border-box;
     text-align: center;
     margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -13,12 +14,47 @@ body {
 
 }
 
+.container {
+    margin: auto;
+}
+
+.place-ships {
+    display: flex;
+    color: rgb(245, 190, 88);
+    flex-direction: column;
+    margin-bottom: 3rem;
+}
+
+.ship-buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.selected {
+    background-color: yellow;
+}
+
+.placed {
+    background-color: rgb(170, 234, 170);
+}
+
+button {
+    color: navy;
+    font-weight: bold;
+    width: 15ch;
+    height: 2rem;
+    border: none;
+    border-radius: 8px;
+}
+
 .boards-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 34rem;
-    width: 90%;
+    width: 1000px;
     border: 2px solid red;
     background: navy;
     color: white;
