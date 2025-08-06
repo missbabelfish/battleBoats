@@ -4,12 +4,39 @@ import renderBoard from './renderBoard.js';
 import computerPlay from './computerPlay.js';
 import Gameboard from './gameboard.js';
 
+const boats = {
+	sub: {
+		length: 5,
+		id: 0,
+	},
+	yacht: {
+		length: 4,
+		id: 1,
+	},
+	tug: {
+		length: 3,
+		id: 2,
+	},
+	barge: {
+		length: 3,
+		id: 3,
+	},
+	dinghy: {
+		length: 2,
+		id: 4,
+	},
+}
+
 const shipButtons = document.querySelector('.ship-buttons')
+const orientButtons = document.querySelector('.orient-buttons')
 
 let player1, player2, board1, board2;
 // set placement mode
 let isPlacingShips = true;
 let shipsToPlace = 5;
+let currentShip;
+let currentOrient;
+let validPlacement = false;
 
 function startNewGame() {
 	// clear old state
@@ -28,12 +55,25 @@ function startNewGame() {
 }
 
 shipButtons.addEventListener('click', e => {
-	const buttons = [...document.getElementsByClassName('ship-button')];
-	buttons.forEach(button => {
-		button.classList.remove('selected')
+	const shipButtons = [...document.getElementsByClassName('ship-button')];
+	shipButtons.forEach(button => {
+		button.classList.remove('selected');
 	});
-	let ship = e.target.closest('button')
-	ship.classList.toggle('selected')
+	let shipButton = e.target.closest('button')
+	shipButton.classList.toggle('selected')
+	let currentShipId = shipButton.id
+	currentShip = { length: boats[currentShipId].length, id: boats[currentShipId].id }
+
+})
+
+orientButtons.addEventListener('click', e => {
+	const orientButtons = [...document.getElementsByClassName('orient-button')];
+	orientButtons.forEach(button => {
+		button.classList.remove('selected');
+	});
+	let orientButton = e.target.closest('button');
+	orientButton.classList.toggle('selected');
+	currentOrient = orientButton.id
 })
 
 // hardcoded to 1-player game
@@ -79,13 +119,28 @@ document.getElementById('player2-board').addEventListener('click', e => {
 	}, 500);
 });
 
+// display possible ship placement
 document.getElementById('player1-board').addEventListener('mouseover', e => {
-	if (!isPlacingShips) {
+	if (!isPlacingShips || !currentShip || !currentOrient) {
 		return;
 	}
 
+	const sq = e.target.closest('.square');
+	if (!sq) return;
+	
+	const row = +sq.dataset.row;
+	const col = +sq.dataset.col;
+
+	if (currentOrient === 'horiz') {
+		validPlacement = col + currentShip.length - 1 <= 9;
+	}
+	if (currentOrient === 'vert') {
+		validPlacement = row + currentShip.length - 1 <= 9;
+	}
+	console.log({validPlacement})
 })
 
+// confirm ship placement
 document.getElementById('player1-board').addEventListener('click', e => {
 	if (!isPlacingShips) {
 		return;
@@ -93,6 +148,8 @@ document.getElementById('player1-board').addEventListener('click', e => {
 	const sq = e.target.closest('.square');
 	if (!sq) return;
 
+	const row = +sq.dataset.row;
+	const col = +sq.dataset.col;
 
 
 })
