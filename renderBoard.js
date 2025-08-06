@@ -9,7 +9,7 @@ export default function renderBoard(playerBoard, opponentBoard, containerId) {
 			div.className = 'square';
 			div.dataset.row = r;
 			div.dataset.col = c;
-			if(cell.hasShip) {
+			if(cell.hasShip && containerId === 'player1-board') {
 				div.classList.add('placed')
 			}
 			if (cell.isHit) {

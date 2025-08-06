@@ -31,12 +31,13 @@ const humanBoard = document.getElementById('player1-board')
 const shipButtons = document.querySelector('.ship-buttons')
 const orientButtons = document.querySelector('.orient-buttons')
 const shipButtonEls = [...document.getElementsByClassName('ship-button')];
+const orientButtonEls = [...document.getElementsByClassName('orient-button')];
 
 
 let player1, player2, board1, board2;
 // set placement mode
-let isPlacingShips = FinalizationRegistry;
-let shipsToPlace = 5;
+let isPlacingShips = false;
+let shipsToPlace;
 let currentShip;
 let currentShipId;
 let currentOrient;
@@ -44,6 +45,18 @@ let validPlacement = false;
 let currentShipCoords = [];
 
 function startNewGame() {
+	// initialize state 
+	shipsToPlace = 5;
+	// clear UI buttons
+	shipButtonEls.forEach(button => {
+		button.classList.remove('selected')
+		button.classList.remove('invalid')
+		button.classList.remove('placed')
+	})
+	orientButtonEls.forEach(button => {
+		button.classList.remove('selected');
+	});
+
 	// clear old state
 	if (player1) {
 		// clear containers 
@@ -75,8 +88,9 @@ shipButtons.addEventListener('click', e => {
 })
 
 orientButtons.addEventListener('click', e => {
-	const orientButtons = [...document.getElementsByClassName('orient-button')];
-	orientButtons.forEach(button => {
+	if (!shipsToPlace) return;
+
+	orientButtonEls.forEach(button => {
 		button.classList.remove('selected');
 	});
 	let orientButton = e.target.closest('button');
@@ -89,6 +103,11 @@ document.getElementById('player2-board').addEventListener('click', e => {
 	// only act if a .square was clicked
 	const sq = e.target.closest('.square');
 	if (!sq) return;
+
+	if (shipsToPlace) {
+		alert ('Place the rest of your ships!')
+		return;
+	}
 
 	const row = +sq.dataset.row;
 	const col = +sq.dataset.col;
@@ -116,15 +135,16 @@ document.getElementById('player2-board').addEventListener('click', e => {
 			[r2, c2] = computerPlay();
 		}
 		const compWin = board1.receiveAttack(r2, c2);
-
+		
 		renderBoard(board2, board1, 'player2-board');
 		renderBoard(board1, board2, 'player1-board');
-
+		
 		if (compWin) {
 			alert('Player 2 wins!');
 			return startNewGame();
 		}
 	}, 500);
+	
 });
 
 // display possible ship placement
@@ -216,6 +236,7 @@ document.getElementById('player1-board').addEventListener('click', e => {
 	
 	board1.placeShip(currentShip.id, row, col, currentShip.length, currentOrient)
 	shipsToPlace--;
+	if (!shipsToPlace) alert ('ATTACK!!!')
 	isPlacingShips = false;
 })
 
