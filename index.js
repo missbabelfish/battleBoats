@@ -133,8 +133,6 @@ humanBoard.addEventListener('mouseover', e => {
 		cell.classList.remove('invalid')
 	})
 	
-	// console.log(cells[0].dataset.row)
-
 	const sq = e.target.closest('.square');
 	if (!sq) return;
 	
@@ -164,8 +162,10 @@ humanBoard.addEventListener('mouseover', e => {
 		for (let [row, col] of currentShipCoords) {
 			for (let i = 0; i < cells.length; i++) {
 				if (+cells[i].dataset.row === row && +cells[i].dataset.col === col) {
-					console.log('match')
-					console.log(cells[i].classList)
+					if (board1.board[row][col].hasShip) {
+						cells[i].classList.add('invalid');
+						validPlacement = false;
+					}
 					cells[i].classList.add(validPlacement ? 'placing' : 'invalid')
 				}
 			}
@@ -182,9 +182,27 @@ document.getElementById('player1-board').addEventListener('click', e => {
 	const sq = e.target.closest('.square');
 	if (!sq) return;
 
+	const cells = [...humanBoard.children];
+
 	const row = +sq.dataset.row;
 	const col = +sq.dataset.col;
 
+	if (currentShipCoords) {
+		for (let [row, col] of currentShipCoords) {
+			for (let i = 0; i < cells.length; i++) {
+				if (
+					+cells[i].dataset.row === row &&
+					+cells[i].dataset.col === col
+				) {
+					cells[i].classList.remove('placing');
+					cells[i].classList.add('placed');
+				}
+			}
+		}
+	}
+	
+	board1.placeShip(currentShip.id, row, col, currentShip.length, currentOrient)
+	console.log({board1})
 
 })
 
