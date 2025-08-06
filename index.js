@@ -30,12 +30,15 @@ const boats = {
 const humanBoard = document.getElementById('player1-board')
 const shipButtons = document.querySelector('.ship-buttons')
 const orientButtons = document.querySelector('.orient-buttons')
+const shipButtonEls = [...document.getElementsByClassName('ship-button')];
+
 
 let player1, player2, board1, board2;
 // set placement mode
-let isPlacingShips = true;
+let isPlacingShips = FinalizationRegistry;
 let shipsToPlace = 5;
 let currentShip;
+let currentShipId;
 let currentOrient;
 let validPlacement = false;
 let currentShipCoords = [];
@@ -57,13 +60,16 @@ function startNewGame() {
 }
 
 shipButtons.addEventListener('click', e => {
-	const shipButtons = [...document.getElementsByClassName('ship-button')];
-	shipButtons.forEach(button => {
+	if (!shipsToPlace) return;
+	// add conditional to return if button already in placed state
+
+	isPlacingShips = true;
+	shipButtonEls.forEach(button => {
 		button.classList.remove('selected');
 	});
 	let shipButton = e.target.closest('button')
 	shipButton.classList.toggle('selected')
-	let currentShipId = shipButton.id
+	currentShipId = shipButton.id
 	currentShip = { length: boats[currentShipId].length, id: boats[currentShipId].id }
 
 })
@@ -162,11 +168,11 @@ humanBoard.addEventListener('mouseover', e => {
 		for (let [row, col] of currentShipCoords) {
 			for (let i = 0; i < cells.length; i++) {
 				if (+cells[i].dataset.row === row && +cells[i].dataset.col === col) {
+					cells[i].classList.add(validPlacement ? 'placing' : 'invalid')
 					if (board1.board[row][col].hasShip) {
 						cells[i].classList.add('invalid');
 						validPlacement = false;
 					}
-					cells[i].classList.add(validPlacement ? 'placing' : 'invalid')
 				}
 			}
 		}
@@ -200,10 +206,17 @@ document.getElementById('player1-board').addEventListener('click', e => {
 			}
 		}
 	}
+	// add placed class to ship button
+	for (let button of shipButtonEls) {
+		if (button.id === currentShipId) {
+			button.classList.remove('selected')
+			button.classList.add('placed')
+		}
+	}
 	
 	board1.placeShip(currentShip.id, row, col, currentShip.length, currentOrient)
-	console.log({board1})
-
+	shipsToPlace--;
+	isPlacingShips = false;
 })
 
 // Start the first game
