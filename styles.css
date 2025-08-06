@@ -25,6 +25,14 @@ body {
     margin: 6rem auto;
 }
 
+.square {
+    width: 40px;
+    height: 40px;
+    background-color: lightblue;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
 .place-ships {
     display: flex;
     color: rgb(245, 190, 88);
@@ -61,6 +69,10 @@ body {
     background-color: limegreen;
 }
 
+.invalid {
+    background-color: rgb(232, 82, 82);
+}
+
 button {
     color: navy;
     font-weight: bold;
@@ -90,13 +102,6 @@ button {
     margin-top: 1rem;
 }
 
-.square {
-    width: 40px;
-    height: 40px;
-    background-color: lightblue;
-    border: 1px solid white;
-    cursor: pointer;
-}
 
 .square.hit {
     background: gray;

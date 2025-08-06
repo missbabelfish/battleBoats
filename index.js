@@ -27,6 +27,7 @@ const boats = {
 	},
 }
 
+const humanBoard = document.getElementById('player1-board')
 const shipButtons = document.querySelector('.ship-buttons')
 const orientButtons = document.querySelector('.orient-buttons')
 
@@ -37,6 +38,7 @@ let shipsToPlace = 5;
 let currentShip;
 let currentOrient;
 let validPlacement = false;
+let currentShipCoords = [];
 
 function startNewGame() {
 	// clear old state
@@ -120,10 +122,18 @@ document.getElementById('player2-board').addEventListener('click', e => {
 });
 
 // display possible ship placement
-document.getElementById('player1-board').addEventListener('mouseover', e => {
+humanBoard.addEventListener('mouseover', e => {
 	if (!isPlacingShips || !currentShip || !currentOrient) {
 		return;
 	}
+
+	const cells = ([...humanBoard.children])
+	cells.forEach(cell => {
+		cell.classList.remove('placing')
+		cell.classList.remove('invalid')
+	})
+	
+	// console.log(cells[0].dataset.row)
 
 	const sq = e.target.closest('.square');
 	if (!sq) return;
@@ -131,18 +141,42 @@ document.getElementById('player1-board').addEventListener('mouseover', e => {
 	const row = +sq.dataset.row;
 	const col = +sq.dataset.col;
 
+	// calculate occupied squares, set validity
 	if (currentOrient === 'horiz') {
 		validPlacement = col + currentShip.length - 1 <= 9;
 	}
 	if (currentOrient === 'vert') {
 		validPlacement = row + currentShip.length - 1 <= 9;
 	}
-	console.log({validPlacement})
+
+	// create preview coords
+	currentShipCoords = [];
+	for (let i = 0; i < currentShip.length; i++) {
+		if (currentOrient === 'horiz') {
+			currentShipCoords.push([row, col + i]);
+		} else {
+			currentShipCoords.push([row + i, col]);
+		}
+	}
+
+	// apply preview classes to cells
+	if (currentShipCoords) {
+		for (let [row, col] of currentShipCoords) {
+			for (let i = 0; i < cells.length; i++) {
+				if (+cells[i].dataset.row === row && +cells[i].dataset.col === col) {
+					console.log('match')
+					console.log(cells[i].classList)
+					cells[i].classList.add(validPlacement ? 'placing' : 'invalid')
+				}
+			}
+		}
+	}
+
 })
 
 // confirm ship placement
 document.getElementById('player1-board').addEventListener('click', e => {
-	if (!isPlacingShips) {
+	if (!isPlacingShips || !validPlacement) {
 		return;
 	}
 	const sq = e.target.closest('.square');
